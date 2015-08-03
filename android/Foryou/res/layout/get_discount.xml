@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1"
+    android:orientation="vertical" >
+
+    <include layout="@layout/top_layout" />
+
+    <TextView
+            android:id="@+id/not_use_baoxian"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_size"
+            android:layout_marginRight="@dimen/padding_size"
+            android:layout_marginTop="@dimen/top_padding_size"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="不使用代金券"
+            android:textColor="@color/black"
+            android:textSize="@dimen/edittext_size" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_size"
+        android:layout_marginRight="@dimen/padding_size"
+        android:layout_marginTop="@dimen/top_padding_size"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="5dp"
+                android:text="*"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingBottom="12dp"
+                android:text="代金券号:"
+                android:textColor="@color/word_color"
+                android:textSize="@dimen/edittext_size" />
+
+            <EditText
+                android:id="@+id/discount_number"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@null"
+                android:hint="请输入代金券号"
+                android:inputType="textPhonetic"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/edittext_size" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="10dp"
+            android:text="1.一张代金券只能使用一次\n2.代金券只能抵扣运费
+，不能折现，如一张抵扣500元，运费为1000元时，则实际只需支付500元"
+            android:textColor="@color/red"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="19dp"
+            android:background="@drawable/login_btn"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="20dp" />
+    </LinearLayout>
+
+</LinearLayout>

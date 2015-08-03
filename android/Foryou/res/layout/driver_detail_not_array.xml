@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_size"
+            android:text="暂未安排司机"
+            android:textColor="@color/word_color"
+            android:textSize="@dimen/edittext_size" />
+
+        <TextView
+            android:id="@+id/cuichu_array"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/padding_size"
+            android:background="@drawable/login_btn"
+            android:padding="5dp"
+            android:text="催促安排司机"
+            android:textColor="@color/white"
+            android:textSize="@dimen/edittext_size" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:text="注：运单正常安排司机为发货前4个小时，如您比较紧急可以点击［催促安排司机］,半小时之内只能点击一次"
+        android:textColor="@color/red"
+        android:textSize="@dimen/edittext_size" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/line_color" />
+
+</LinearLayout>
