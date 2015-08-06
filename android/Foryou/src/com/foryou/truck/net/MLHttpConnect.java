@@ -27,6 +27,12 @@ public class MLHttpConnect {
 		String url = MLHttpConstant.URL_START + "/common/region";
 		MLHttpConnect2.getData(context, url, parmas, jsonParser, handler);
 	}
+	
+	public static Message getAreasData2(Context context,
+			Map<String, String> parmas, BaseJsonParser jsonParser) {
+		String url = MLHttpConstant.URL_START + "/common/region";
+		return MLHttpConnect2.getData2(context, url, parmas, jsonParser);
+	}
 
 	public static void getConfigData(Context context,
 			Map<String, String> parmas, BaseJsonParser jsonParser,
@@ -57,6 +63,15 @@ public class MLHttpConnect {
 		parmas.put("uid", SharePerfenceUtil.getUid(context));
 		MLHttpConnect2.getData(context, url, parmas, jsonParser, handler);
 	}
+	
+	public static Message GetOrderList2(Context context,
+			Map<String, String> parmas, BaseJsonParser jsonParser) {
+		String url = MLHttpConstant.URL_START + Constant.SERVER_VERSION
+				+ "/order/list";
+		parmas.put("key", SharePerfenceUtil.getKey(context));
+		parmas.put("uid", SharePerfenceUtil.getUid(context));
+		return MLHttpConnect2.getData2(context, url, parmas, jsonParser);
+	}
 
 	public static void GetOrderDetail(Context context,
 			Map<String, String> parmas, BaseJsonParser jsonParser,
@@ -67,6 +82,15 @@ public class MLHttpConnect {
 		parmas.put("uid", SharePerfenceUtil.getUid(context));
 		MLHttpConnect2.getData(context, url, parmas, jsonParser, handler);
 	}
+	
+	public static Message GetOrderDetail2(Context context,
+			Map<String, String> parmas, BaseJsonParser jsonParser) {
+		String url = MLHttpConstant.URL_START + Constant.SERVER_VERSION
+				+ "/order/detail";
+		parmas.put("key", SharePerfenceUtil.getKey(context));
+		parmas.put("uid", SharePerfenceUtil.getUid(context));
+		return MLHttpConnect2.getData2(context, url, parmas, jsonParser);
+	}
 
 	public static void QuoteList(Context context, Map<String, String> parmas,
 			BaseJsonParser jsonParser, Handler handler) {
@@ -76,6 +100,17 @@ public class MLHttpConnect {
 		parmas.put("uid", SharePerfenceUtil.getUid(context));
 		MLHttpConnect2.getData(context, url, parmas, jsonParser, handler);
 	}
+	
+	public static Message QuoteList2(Context context, Map<String, String> parmas,
+			BaseJsonParser jsonParser) {
+		String url = MLHttpConstant.URL_START + Constant.SERVER_VERSION
+				+ "/quote/list";
+		parmas.put("key", SharePerfenceUtil.getKey(context));
+		parmas.put("uid", SharePerfenceUtil.getUid(context));
+		return MLHttpConnect2.getData2(context, url, parmas, jsonParser);
+	}
+	
+	
 
 	public static Message QuoteAgentList(Context context,
 			Map<String, String> parmas, BaseJsonParser jsonParser) {
@@ -135,6 +170,15 @@ public class MLHttpConnect {
 		parmas.put("key", SharePerfenceUtil.getKey(context));
 		parmas.put("uid", SharePerfenceUtil.getUid(context));
 		MLHttpConnect2.getData(context, url, parmas, jsonParser, handler);
+	}
+	
+	public static Message GetUserDetail2(Context context,
+			Map<String, String> parmas, BaseJsonParser jsonParser) {
+		String url = MLHttpConstant.URL_START + Constant.SERVER_VERSION
+				+ "/user/detail";
+		parmas.put("key", SharePerfenceUtil.getKey(context));
+		parmas.put("uid", SharePerfenceUtil.getUid(context));
+		return MLHttpConnect2.getData2(context, url, parmas, jsonParser);
 	}
 
 	public static void QuoteCreate(Context context, Map<String, String> parmas,

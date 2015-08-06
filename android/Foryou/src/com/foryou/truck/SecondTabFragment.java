@@ -10,6 +10,7 @@ import java.util.Map;
 import org.kymjs.aframe.ui.fragment.BaseFragment;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,11 +26,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foryou.truck.AgentListActivity.getAgentListAsynTask;
 import com.foryou.truck.adapter.MyListViewAdapter;
 import com.foryou.truck.adapter.MyListViewAdapter.CallBacks;
 import com.foryou.truck.entity.QuoteListEntity.QuoteContent;
 import com.foryou.truck.net.MLHttpConnect;
 import com.foryou.truck.net.MLHttpConnect2;
+import com.foryou.truck.parser.OrderDetailJsonParser;
 import com.foryou.truck.parser.QuoteListJsonParser;
 import com.foryou.truck.util.ToastUtils;
 import com.foryou.truck.view.PullDownView;
@@ -49,10 +52,10 @@ public class SecondTabFragment extends BaseFragment {
 	private int PAGE_INDEX = 1;
 	private String TAG = "SecondTabFragment";
 
-	private boolean beginToRefresh = false; // 倒计时刷新和下拉刷新
+	//private boolean beginToRefresh = false; // 倒计时刷新和下拉刷新
 
 	private View mRootView = null;
-	
+
 	private LinearLayout noContentView;
 
 	OnScrollListener scorllListener = new OnScrollListener() {
@@ -72,65 +75,9 @@ public class SecondTabFragment extends BaseFragment {
 					+ totalItemCount);
 			if (((firstVisibleItem + visibleItemCount) == totalItemCount)
 					&& !isRefresh) {
-				isRefresh = true;
-				listView.setOnScrollListener(null);
-				PAGE_INDEX += 1;
-				getQuoteList();
+				getQuoteList(true);
 			} else {
 
-			}
-		}
-
-	};
-
-	Handler mHandler = new Handler() {
-
-		@Override
-		public void handleMessage(Message msg) {
-			mContext.cancelProgressDialog();
-			pullDownView.notifyRefreshComplete();
-			if (MLHttpConnect2.SUCCESS == msg.what) {
-				if (mQuoteListParser.entity.status.equals("Y")) {
-					String result = (String) msg.obj;
-					Log.i("aa", "result:" + result);
-					if (!isRefresh) {// 正常刷新加载
-						beginToRefresh = false;
-						adapterlist.clear();
-						InitData();
-					}else if(beginToRefresh){
-						beginToRefresh = false;
-						adapterlist.clear();
-						InitData();
-					} else {// 加载更多
-						isRefresh = false;
-						InitData();
-					}
-
-					if (mQuoteListParser.entity.data.list.size() == PAGE_SIZE) {
-						listView.setOnScrollListener(scorllListener);
-						pullDownView.showFooterView(true);
-					} else {
-						listView.setOnScrollListener(null);
-						pullDownView.showFooterView(false);
-					}
-				} else {
-					listView.setOnScrollListener(null);
-					pullDownView.showFooterView(false);
-					ToastUtils.toast(mContext, mQuoteListParser.entity.msg);
-				}
-			} else {
-				listView.setOnScrollListener(null);
-				pullDownView.showFooterView(false);
-				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
-						.show();
-			}
-			super.handleMessage(msg);
-			
-			if(adapterlist.size() == 0){
-				noContentView.setVisibility(android.view.View.VISIBLE);
-				((TextView)noContentView.findViewById(R.id.nocontent_text)).setText("还没有询价哦～");
-			}else{
-				noContentView.setVisibility(android.view.View.GONE);
 			}
 		}
 
@@ -156,18 +103,100 @@ public class SecondTabFragment extends BaseFragment {
 			map.put("quote_min", "" + mContent.quote_min);
 			adapterlist.add(map);
 		}
-		
+
 		mAdapter.notifyDataSetChanged();
 	}
 
 	QuoteListJsonParser mQuoteListParser;
+	boolean isTaskRunning = false;
+	public class getQuoteListTask extends
+			AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
 
-	private void getQuoteList() {
-		mContext.showProgressDialog();
-		mQuoteListParser = new QuoteListJsonParser();
-		Map<String, String> parmas = new HashMap<String, String>();
-		parmas.put("page", "" + PAGE_INDEX);
-		MLHttpConnect.QuoteList(mContext, parmas, mQuoteListParser, mHandler);
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mContext.showProgressDialog();
+			mQuoteListParser = new QuoteListJsonParser();
+			parmas = new HashMap<String, String>();
+			parmas.put("page", "" + PAGE_INDEX);
+			isTaskRunning = true;
+		}
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.QuoteList2(mContext, parmas, mQuoteListParser);
+			return msg.what;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			pullDownView.notifyRefreshComplete();
+			mContext.cancelProgressDialog();
+			
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
+				if (mQuoteListParser.entity.status.equals("Y")) {
+					//String result = (String) msg.obj;
+					//Log.i("aa", "result:" + result);
+					if (!isRefresh) {// 正常刷新加载
+						adapterlist.clear();
+						InitData();
+					}else {// 加载更多
+						isRefresh = false;
+						InitData();
+					}
+
+					if (mQuoteListParser.entity.data.list.size() == PAGE_SIZE) {
+						listView.setOnScrollListener(scorllListener);
+						pullDownView.showFooterView(true);
+					} else {
+						listView.setOnScrollListener(null);
+						pullDownView.showFooterView(false);
+					}
+				} else {
+					listView.setOnScrollListener(null);
+					pullDownView.showFooterView(false);
+					ToastUtils.toast(mContext, mQuoteListParser.entity.msg);
+				}
+				break;
+			case MLHttpConnect2.FAILED:
+				listView.setOnScrollListener(null);
+				pullDownView.showFooterView(false);
+				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			}
+			if (adapterlist.size() == 0) {
+				noContentView.setVisibility(android.view.View.VISIBLE);
+				((TextView) noContentView.findViewById(R.id.nocontent_text))
+						.setText("还没有询价哦～");
+			} else {
+				noContentView.setVisibility(android.view.View.GONE);
+			}
+			isTaskRunning = false;
+		}
+	}
+	
+	private void getQuoteList(boolean getMore) {
+		if (isTaskRunning) {
+			Log.i(TAG, "getQuoteList task is not finish ....");
+			return;
+		} else {
+			if (getMore) {
+				PAGE_INDEX += 1;
+				isRefresh = true;
+				listView.setOnScrollListener(null);
+			} else {
+				PAGE_INDEX = 1;
+			}
+			new getQuoteListTask().execute();
+		}
 	}
 
 	private void InitListView(View view) {
@@ -178,10 +207,10 @@ public class SecondTabFragment extends BaseFragment {
 		pullDownView.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				if (!beginToRefresh) {
-					beginToRefresh = true;
-					PAGE_INDEX = 1;
-					getQuoteList();
+				if (isTaskRunning) {
+					pullDownView.notifyRefreshComplete();
+				} else {
+					getQuoteList(false);
 				}
 			}
 		});
@@ -238,11 +267,7 @@ public class SecondTabFragment extends BaseFragment {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			Log.i(TAG, "mRefleshHandler ......");
-			if (!beginToRefresh && !isRefresh) {
-				beginToRefresh = true;
-				PAGE_INDEX = 1;
-				getQuoteList();
-			}
+			getQuoteList(false);
 			mRefleshHandler.sendEmptyMessageDelayed(0, 15 * 1000);
 		}
 	};
@@ -251,8 +276,7 @@ public class SecondTabFragment extends BaseFragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		PAGE_INDEX = 1;
-		getQuoteList();
+		getQuoteList(false);
 		mRefleshHandler.sendEmptyMessageDelayed(0, 15 * 1000);
 	}
 
@@ -272,9 +296,10 @@ public class SecondTabFragment extends BaseFragment {
 			mTitle = (TextView) mRootView.findViewById(R.id.title);
 			mTitle.setText("我的询价");
 			mContext = (TabActivity) getActivity();
-			
-			noContentView =(LinearLayout)mRootView.findViewById(R.id.no_content_view);
-			
+
+			noContentView = (LinearLayout) mRootView
+					.findViewById(R.id.no_content_view);
+
 			InitListView(mRootView);
 		} else {
 			ViewGroup viewgroup = (ViewGroup) mRootView.getParent();

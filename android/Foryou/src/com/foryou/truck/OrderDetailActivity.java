@@ -28,6 +28,7 @@ import com.foryou.truck.entity.CommonConfigEntity;
 import com.foryou.truck.net.HttpApi;
 import com.foryou.truck.net.MLHttpConnect;
 import com.foryou.truck.net.MLHttpConnect2;
+import com.foryou.truck.parser.AgentCommentListJsonParser;
 import com.foryou.truck.parser.BdrenderReverseParser;
 import com.foryou.truck.parser.OrderDetailJsonParser;
 import com.foryou.truck.parser.ReOrderJsonParser;
@@ -46,7 +47,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 public class OrderDetailActivity extends BaseActivity {
 	// private double mLatitude, mLongitude;
 	private Context mContext;
-	
+
 	private Button mDetailPlace;
 	RelativeLayout mMapLayout;
 	private Button mConfirmBtn;
@@ -54,22 +55,21 @@ public class OrderDetailActivity extends BaseActivity {
 
 	RelativeLayout mAgentPhoneLayout, mDriverPhoneLayout;
 
-
-	@BindView(id=R.id.bmapView)
+	@BindView(id = R.id.bmapView)
 	private ImageView mMapView;
-	@BindView(id=R.id.right,click=true)
+	@BindView(id = R.id.right, click = true)
 	private Button mRightBtn;
-	
-	@BindView(id=R.id.title_layout)
+
+	@BindView(id = R.id.title_layout)
 	RelativeLayout mTopView;
-	
-	@BindView(id=R.id.zhengche_or_pinche)
+
+	@BindView(id = R.id.zhengche_or_pinche)
 	private MutiChooseBtn mZhengche;
-	@BindView(id=R.id.kaifapiao)
+	@BindView(id = R.id.kaifapiao)
 	private MutiChooseBtn mFapiao;
-	@BindView(id=R.id.huidan)
+	@BindView(id = R.id.huidan)
 	private MutiChooseBtn mHuidan;
-	
+
 	@BindView(id = R.id.driver_name)
 	private TextView mDriverName;
 	@BindView(id = R.id.driver_phone)
@@ -114,9 +114,8 @@ public class OrderDetailActivity extends BaseActivity {
 	private TextView mRecePhone2;
 	@BindView(id = R.id.driver_plate)
 	private TextView mDriverPlate;
-	
-	private TextView
-			mMapline;
+
+	private TextView mMapline;
 	private TextView mRefreshLocate;
 
 	private TextView mCuichuArray;
@@ -129,39 +128,59 @@ public class OrderDetailActivity extends BaseActivity {
 	private TextView mZhangyongline;
 
 	private OrderDetailJsonParser parser;
-	Handler mHandler = new Handler() {
+	public class getOrderDetailTask extends
+			AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
+
 		@Override
-		public void handleMessage(Message msg) {
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			showProgressDialog();
+			parser = new OrderDetailJsonParser();
+			parmas = new HashMap<String, String>();
+			parmas.put("order_id", "" + order_id);
+			isTaskRunning = true;
+		}
+		
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.GetOrderDetail2(mContext, parmas, parser);
+			return msg.what;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
 			cancelProgressDialog();
-			if (MLHttpConnect2.SUCCESS == msg.what) {
+
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
 				if (parser.entity.status.equals("Y")) {
-					String result = (String) msg.obj;
-					Log.i("aa", "result:" + Tools.UnicodeDecode(result));
-					// if (parser.entity.data.location.latest != null) {
-					// mLatitude = Long
-					// .valueOf(parser.entity.data.location.latest.lat);
-					// mLongitude = Long
-					// .valueOf(parser.entity.data.location.latest.lng);
-					// }
 					InitData();
 				} else {
 					ToastUtils.toast(mContext, parser.entity.msg);
 				}
-			} else {
+				break;
+			case MLHttpConnect2.FAILED:
 				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
 						.show();
+				break;
 			}
-			super.handleMessage(msg);
+			isTaskRunning = false;
 		}
-
-	};
+	}
 
 	private void getOrderDetail() {
-		showProgressDialog();
-		parser = new OrderDetailJsonParser();
-		Map<String, String> parmas = new HashMap<String, String>();
-		parmas.put("order_id", "" + order_id);
-		MLHttpConnect.GetOrderDetail(this, parmas, parser, mHandler);
+		if(isTaskRunning){
+			Log.i(TAG,"getOrderDetail task is running");
+			return;
+		}else{
+			new getOrderDetailTask().execute();
+		}
 	}
 
 	Handler mGetAddressHandler = new Handler() {
@@ -358,15 +377,15 @@ public class OrderDetailActivity extends BaseActivity {
 		if (Integer.valueOf(parser.entity.data.goods.car_type).equals(
 				Constant.PIN_CHE)) {
 			mZhengche.setChooseStatus(false, true);
-//			if (parser.entity.data.goods.occupy_length.equals("0")) {
-//				mZhanyongLayout.setVisibility(android.view.View.GONE);
-//				mZhangyongline.setVisibility(android.view.View.GONE);
-//			} else {
-				mZhanyongLayout.setVisibility(android.view.View.VISIBLE);
-				((TextView) mZhanyongLayout.findViewById(R.id.zhanyong_length))
-						.setText(parser.entity.data.goods.occupy_length +"米");
-				mZhangyongline.setVisibility(android.view.View.VISIBLE);
-//			}
+			// if (parser.entity.data.goods.occupy_length.equals("0")) {
+			// mZhanyongLayout.setVisibility(android.view.View.GONE);
+			// mZhangyongline.setVisibility(android.view.View.GONE);
+			// } else {
+			mZhanyongLayout.setVisibility(android.view.View.VISIBLE);
+			((TextView) mZhanyongLayout.findViewById(R.id.zhanyong_length))
+					.setText(parser.entity.data.goods.occupy_length + "米");
+			mZhangyongline.setVisibility(android.view.View.VISIBLE);
+			// }
 
 		} else {
 			mZhengche.setChooseStatus(true, false);
@@ -403,14 +422,12 @@ public class OrderDetailActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		
+
 		mMainMapLayout = (LinearLayout) findViewById(R.id.map_main_layout);
 
 		mDriverInfoLayout = (LinearLayout) findViewById(R.id.driver_detail_layout);
 		mNotArrayDriverLayout = (LinearLayout) findViewById(R.id.not_array_driver_layout);
 	}
-	
-	
 
 	@Override
 	public void setRootView() {
@@ -423,7 +440,7 @@ public class OrderDetailActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		mContext = this;
 
 		// imageLoader.displayImage(Tools.getStaticMapImageUrl(mLatitude,
@@ -431,7 +448,7 @@ public class OrderDetailActivity extends BaseActivity {
 
 		ShowBackView();
 		setTitle("运单详情");
-		
+
 		mRightBtn.setVisibility(android.view.View.VISIBLE);
 		mRightBtn.setBackgroundResource(R.drawable.more_icon);
 
@@ -450,7 +467,7 @@ public class OrderDetailActivity extends BaseActivity {
 
 		mRefreshLocate = (TextView) findViewById(R.id.refresh_locate);
 		mRefreshLocate.setOnClickListener(this);
-		
+
 		mMapline = (TextView) findViewById(R.id.map_line);
 		mMapView = (ImageView) findViewById(R.id.bmapView);
 		mDetailPlace = (Button) findViewById(R.id.detail_place);
@@ -634,7 +651,8 @@ public class OrderDetailActivity extends BaseActivity {
 								intent.putExtra("order_id", order_id);
 								startActivity(intent);
 							} else if (datalist.get(pos).equals("查看三方协议")) {
-								if (SharePerfenceUtil.getName(mContext).equals("")) {
+								if (SharePerfenceUtil.getName(mContext).equals(
+										"")) {
 									alertDialog(
 											"",
 											"用户姓名为空,请填写用户姓名后查看",

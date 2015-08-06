@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.kymjs.aframe.ui.fragment.BaseFragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -12,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,6 +32,7 @@ import android.widget.Toast;
 
 import com.foryou.truck.net.MLHttpConnect;
 import com.foryou.truck.net.MLHttpConnect2;
+import com.foryou.truck.parser.OrderPayJsonParser;
 import com.foryou.truck.parser.SimpleJasonParser;
 import com.foryou.truck.parser.UserDetailJsonParser;
 import com.foryou.truck.tools.ImageTools;
@@ -227,14 +232,39 @@ public class ForthTabFragment extends BaseFragment {
 	}
 
 	private UserDetailJsonParser mUserDetailParser;
-	Handler mUserDetailHandler = new Handler() {
+	private boolean isTaskRunning = false;
+	public class getUserDetailTask extends AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
+
 		@Override
-		public void handleMessage(Message msg) {
-			// mContext.cancelProgressDialog();
-			if (MLHttpConnect2.SUCCESS == msg.what) {
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mContext.showProgressDialog();
+			mUserDetailParser = new UserDetailJsonParser();
+			parmas = new HashMap<String, String>();
+			isTaskRunning = true;
+		}
+		
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.GetUserDetail2(mContext, parmas, mUserDetailParser);
+			return msg.what;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			mContext.cancelProgressDialog();
+
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
 				if (mUserDetailParser.entity.status.equals("Y")) {
-					String result = (String) msg.obj;
-					Log.i("aa", "result:" + Tools.UnicodeDecode(result));
+					//String result = (String) msg.obj;
+					//Log.i("aa", "result:" + Tools.UnicodeDecode(result));
 					if (mUserDetailParser.entity.data.name.equals("")) {
 						mName.setText("无");
 					} else {
@@ -280,21 +310,25 @@ public class ForthTabFragment extends BaseFragment {
 				} else {
 					ToastUtils.toast(mContext, mUserDetailParser.entity.msg);
 				}
-			} else {
+				break;
+			case MLHttpConnect2.FAILED:
 				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
 						.show();
+				break;
 			}
-			super.handleMessage(msg);
+			isTaskRunning = false;
 		}
 
-	};
+	}
+
 
 	private void getUserDetail() {
 		// mContext.showProgressDialog();
-		mUserDetailParser = new UserDetailJsonParser();
-		Map<String, String> parmas = new HashMap<String, String>();
-		MLHttpConnect.GetUserDetail(mContext, parmas, mUserDetailParser,
-				mUserDetailHandler);
+		if(isTaskRunning){
+			ToastUtils.toast(mContext, "getUserDetail is running");
+		}else{
+			new getUserDetailTask().execute();
+		}
 	}
 
 	@Override

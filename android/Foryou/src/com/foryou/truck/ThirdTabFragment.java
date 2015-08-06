@@ -10,6 +10,7 @@ import java.util.Map;
 import org.kymjs.aframe.ui.fragment.BaseFragment;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,12 +26,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foryou.truck.SecondTabFragment.getQuoteListTask;
 import com.foryou.truck.adapter.MyListViewAdapter;
 import com.foryou.truck.adapter.MyListViewAdapter.CallBacks;
 import com.foryou.truck.entity.OrderListEntity.OrderContent;
 import com.foryou.truck.net.MLHttpConnect;
 import com.foryou.truck.net.MLHttpConnect2;
 import com.foryou.truck.parser.OrderListJsonParser;
+import com.foryou.truck.parser.QuoteListJsonParser;
 import com.foryou.truck.tools.Tools;
 import com.foryou.truck.util.ToastUtils;
 import com.foryou.truck.view.PullDownView;
@@ -49,10 +52,12 @@ public class ThirdTabFragment extends BaseFragment {
 	private View mRootView = null;
 
 	private boolean isRefresh = false;
-	private boolean beginToRefresh = false; // 倒计时刷新和下拉刷新
+	// private boolean beginToRefresh = false; // 倒计时刷新和下拉刷新
 	private int PAGE_SIZE = 5;
 	private int PAGE_INDEX = 1;
-	
+
+	private String TAG = "ThirdTabFragment";
+
 	private LinearLayout noContentView;
 
 	private void InitListView(View view) {
@@ -63,11 +68,10 @@ public class ThirdTabFragment extends BaseFragment {
 		pullDownView.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				if (!beginToRefresh) {
-					beginToRefresh = true;
-					PAGE_INDEX = 1;
-					// getData();
-					getOrderList();
+				if (isTaskRunning) {
+					pullDownView.notifyRefreshComplete();
+				} else {
+					getOrderList(false);
 				}
 			}
 		});
@@ -122,64 +126,9 @@ public class ThirdTabFragment extends BaseFragment {
 					+ totalItemCount);
 			if (((firstVisibleItem + visibleItemCount) == totalItemCount)
 					&& !isRefresh) {
-				isRefresh = true;
-				listView.setOnScrollListener(null);
-				PAGE_INDEX += 1;
-				getOrderList();
+				getOrderList(true);
 			} else {
 
-			}
-		}
-
-	};
-
-	Handler mHandler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			mContext.cancelProgressDialog();
-			pullDownView.notifyRefreshComplete();
-			if (MLHttpConnect2.SUCCESS == msg.what) {
-				if (mQrderListParser.entity.status.equals("Y")) {
-					String result = (String) msg.obj;
-					Log.i("aa", "result:" + Tools.UnicodeDecode(result));
-					if (!isRefresh) {// 正常刷新加载
-						adapterlist.clear();
-						InitData();
-						beginToRefresh = false;
-					}else if(beginToRefresh){
-						adapterlist.clear();
-						InitData();
-						beginToRefresh = false;
-					} else {// 加载更多
-						isRefresh = false;
-						InitData();
-					}
-
-					if (mQrderListParser.entity.data.list.size() == PAGE_SIZE) {
-						listView.setOnScrollListener(scorllListener);
-						pullDownView.showFooterView(true);
-					} else {
-						listView.setOnScrollListener(null);
-						pullDownView.showFooterView(false);
-					}
-				} else {
-					listView.setOnScrollListener(null);
-					pullDownView.showFooterView(false);
-					ToastUtils.toast(mContext, mQrderListParser.entity.msg);
-				}
-			} else {
-				listView.setOnScrollListener(null);
-				pullDownView.showFooterView(false);
-				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
-						.show();
-			}
-			super.handleMessage(msg);
-			
-			if(adapterlist.size() == 0){
-				noContentView.setVisibility(android.view.View.VISIBLE);
-				((TextView)noContentView.findViewById(R.id.nocontent_text)).setText("还没有运单哦～");
-			}else{
-				noContentView.setVisibility(android.view.View.GONE);
 			}
 		}
 
@@ -208,14 +157,95 @@ public class ThirdTabFragment extends BaseFragment {
 	}
 
 	OrderListJsonParser mQrderListParser;
+	boolean isTaskRunning = false;
 
-	private void getOrderList() {
-		mContext.showProgressDialog();
-		mQrderListParser = new OrderListJsonParser();
-		Map<String, String> parmas = new HashMap<String, String>();
-		parmas.put("page", "" + PAGE_INDEX);
-		MLHttpConnect
-				.GetOrderList(mContext, parmas, mQrderListParser, mHandler);
+	public class getOrderListTask extends AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mContext.showProgressDialog();
+			mQrderListParser = new OrderListJsonParser();
+			parmas = new HashMap<String, String>();
+			parmas.put("page", "" + PAGE_INDEX);
+			isTaskRunning = true;
+		}
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.GetOrderList2(mContext, parmas, mQrderListParser);
+			return msg.what;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			pullDownView.notifyRefreshComplete();
+			mContext.cancelProgressDialog();
+
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
+				if (mQrderListParser.entity.status.equals("Y")) {
+					// String result = (String) msg.obj;
+					// Log.i("aa", "result:" + result);
+					if (!isRefresh) {// 正常刷新加载
+						adapterlist.clear();
+						InitData();
+					} else {// 加载更多
+						isRefresh = false;
+						InitData();
+					}
+
+					if (mQrderListParser.entity.data.list.size() == PAGE_SIZE) {
+						listView.setOnScrollListener(scorllListener);
+						pullDownView.showFooterView(true);
+					} else {
+						listView.setOnScrollListener(null);
+						pullDownView.showFooterView(false);
+					}
+				} else {
+					listView.setOnScrollListener(null);
+					pullDownView.showFooterView(false);
+					ToastUtils.toast(mContext, mQrderListParser.entity.msg);
+				}
+				break;
+			case MLHttpConnect2.FAILED:
+				listView.setOnScrollListener(null);
+				pullDownView.showFooterView(false);
+				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			}
+			if (adapterlist.size() == 0) {
+				noContentView.setVisibility(android.view.View.VISIBLE);
+				((TextView) noContentView.findViewById(R.id.nocontent_text))
+						.setText("还没有运单哦～");
+			} else {
+				noContentView.setVisibility(android.view.View.GONE);
+			}
+			isTaskRunning = false;
+		}
+	}
+
+	private void getOrderList(boolean getMore) {
+		if (isTaskRunning) {
+			Log.i(TAG, "getQuoteList task is not finish ....");
+			return;
+		} else {
+			if (getMore) {
+				PAGE_INDEX += 1;
+				isRefresh = true;
+				listView.setOnScrollListener(null);
+			} else {
+				PAGE_INDEX = 1;
+			}
+			new getOrderListTask().execute();
+		}
 	}
 
 	@Override
@@ -227,9 +257,10 @@ public class ThirdTabFragment extends BaseFragment {
 			mRootView = inflater.inflate(R.layout.my_query_list, null);
 			mTitle = (TextView) mRootView.findViewById(R.id.title);
 			mTitle.setText("我的运单");
-			
-			noContentView =(LinearLayout)mRootView.findViewById(R.id.no_content_view);
-			
+
+			noContentView = (LinearLayout) mRootView
+					.findViewById(R.id.no_content_view);
+
 			InitListView(mRootView);
 		} else {
 			ViewGroup viewgroup = (ViewGroup) mRootView.getParent();
@@ -237,8 +268,7 @@ public class ThirdTabFragment extends BaseFragment {
 				viewgroup.removeView(mRootView);
 			}
 		}
-		PAGE_INDEX = 1;
-		getOrderList();
+		getOrderList(false);
 		return mRootView;
 	}
 

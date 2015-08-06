@@ -87,7 +87,7 @@ public class FirstTabFragment extends BaseFragment {
 			mEndDistrictIndex = 0;
 	private TabActivity mContext;
 
-	private AreasJsonParser parser;
+	private AreasJsonParser areaParser;
 
 	private ArrayList<ProvinceModel> provinceList;
 	private String mCache;
@@ -189,29 +189,58 @@ public class FirstTabFragment extends BaseFragment {
 		mCurrentPage = 1;
 		mBackView.setVisibility(android.view.View.GONE);
 	}
-
-	Handler mHandler = new Handler() {
+	
+	boolean isAreaTaskRunning = false;
+	public class GetAreaTask extends AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
 
 		@Override
-		public void handleMessage(Message msg) {
-			// mContext.cancelProgressDialog();
-			if (MLHttpConnect2.SUCCESS == msg.what) {
-				String result = (String) msg.obj;
-				initProvinceDatas();
-				// InitDataList();
-			} else {
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			areaParser = new AreasJsonParser();
+			parmas = new HashMap<String, String>();
+			isAreaTaskRunning = true;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
+				if (areaParser.entity.status.equals("Y")) {
+					initProvinceDatas();
+				}else{
+					ToastUtils.toast(mContext, areaParser.entity.msg);
+				}
+				break;
+			case MLHttpConnect2.FAILED:
 				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
 						.show();
+				break;
 			}
-			super.handleMessage(msg);
+			isAreaTaskRunning = false;
 		}
-	};
+
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.getAreasData2(mContext, parmas, areaParser);
+			return msg.what;
+		}
+
+	}
 
 	private void getAreaData() {
 		// mContext.showProgressDialog();
-		parser = new AreasJsonParser();
-		Map<String, String> parmas = new HashMap<String, String>();
-		MLHttpConnect.getAreasData(mContext, parmas, parser, mHandler);
+		if(isAreaTaskRunning){
+			Log.i(TAG,"getAreaData is Running ...");
+		}else{
+			new GetAreaTask().execute();
+		}
 	}
 
 	public void onBackPressed() {
@@ -244,22 +273,22 @@ public class FirstTabFragment extends BaseFragment {
 		// } catch (Exception e) {
 		//
 		// }
-		for (int i = 0; i < parser.entity.data.size(); i++) {
+		for (int i = 0; i < areaParser.entity.data.size(); i++) {
 			ProvinceModel provice = new ProvinceModel();
-			provice.setName(parser.entity.data.get(i).name);
-			provice.setId(parser.entity.data.get(i).id);
+			provice.setName(areaParser.entity.data.get(i).name);
+			provice.setId(areaParser.entity.data.get(i).id);
 			ArrayList<CityModel> citylist = new ArrayList<CityModel>();
-			for (int j = 0; j < parser.entity.data.get(i).city.size(); j++) {
+			for (int j = 0; j < areaParser.entity.data.get(i).city.size(); j++) {
 				CityModel city = new CityModel();
-				city.setName(parser.entity.data.get(i).city.get(j).name);
-				city.setId(parser.entity.data.get(i).city.get(j).id);
+				city.setName(areaParser.entity.data.get(i).city.get(j).name);
+				city.setId(areaParser.entity.data.get(i).city.get(j).id);
 				ArrayList<DistrictModel> districtlist = new ArrayList<DistrictModel>();
-				for (int k = 0; k < parser.entity.data.get(i).city.get(j).district
+				for (int k = 0; k < areaParser.entity.data.get(i).city.get(j).district
 						.size(); k++) {
 					DistrictModel district = new DistrictModel();
-					district.setName(parser.entity.data.get(i).city.get(j).district
+					district.setName(areaParser.entity.data.get(i).city.get(j).district
 							.get(k).name);
-					district.setId(parser.entity.data.get(i).city.get(j).district
+					district.setId(areaParser.entity.data.get(i).city.get(j).district
 							.get(k).id);
 					districtlist.add(district);
 				}
@@ -938,14 +967,37 @@ public class FirstTabFragment extends BaseFragment {
 
 	}
 
-	Handler mUserDetailHandler = new Handler() {
+	boolean isUserDetailTaskRunning = false;
+	public class getUserDetailTask extends AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
+
 		@Override
-		public void handleMessage(Message msg) {
-			// mContext.cancelProgressDialog();
-			if (MLHttpConnect2.SUCCESS == msg.what) {
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mContext.showProgressDialog();
+			mUserDetailParser = new UserDetailJsonParser();
+			parmas = new HashMap<String, String>();
+			isUserDetailTaskRunning = true;
+		}
+		
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.GetUserDetail2(mContext, parmas, mUserDetailParser);
+			return msg.what;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			mContext.cancelProgressDialog();
+
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
 				if (mUserDetailParser.entity.status.equals("Y")) {
-					String result = (String) msg.obj;
-					// Log.i(TAG, "result:" + Tools.UnicodeDecode(result));
 					SharePerfenceUtil.setName(mContext,
 							mUserDetailParser.entity.data.name);
 					SharePerfenceUtil.setMobile(mContext,
@@ -989,23 +1041,111 @@ public class FirstTabFragment extends BaseFragment {
 				} else {
 					ToastUtils.toast(mContext, mUserDetailParser.entity.msg);
 				}
-			} else {
+				break;
+			case MLHttpConnect2.FAILED:
 				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
 						.show();
+				break;
 			}
-			super.handleMessage(msg);
+			isUserDetailTaskRunning = false;
 		}
 
-	};
+	}
 
 	private void getUserDetail() {
 		// mContext.showProgressDialog();
-		mUserDetailParser = new UserDetailJsonParser();
-		Map<String, String> parmas = new HashMap<String, String>();
-		MLHttpConnect.GetUserDetail(mContext, parmas, mUserDetailParser,
-				mUserDetailHandler);
+		if(isUserDetailTaskRunning){
+			Log.i(TAG,"getUserDetail is running ....");
+		}else{
+			new getUserDetailTask().execute();
+		}
 	}
 
+	boolean isPushTaskRunning = false;
+	public class pushDataToServerTask extends AsyncTask<Integer, Integer, Integer> {
+		private Map<String, String> parmas;
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			mContext.showProgressDialog();
+			mUserDetailParser = new UserDetailJsonParser();
+			parmas = new HashMap<String, String>();
+			isUserDetailTaskRunning = true;
+		}
+		
+		@Override
+		protected Integer doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			Message msg;
+			msg = MLHttpConnect.GetUserDetail2(mContext, parmas, mUserDetailParser);
+			return msg.what;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			mContext.cancelProgressDialog();
+
+			switch (result) {
+			case MLHttpConnect2.SUCCESS:
+				if (mUserDetailParser.entity.status.equals("Y")) {
+					SharePerfenceUtil.setName(mContext,
+							mUserDetailParser.entity.data.name);
+					SharePerfenceUtil.setMobile(mContext,
+							mUserDetailParser.entity.data.mobile);
+					SharePerfenceUtil.setUserType(mContext,
+							mUserDetailParser.entity.data.type);
+					SharePerfenceUtil.setUserGender(mContext,
+							mUserDetailParser.entity.data.gender);
+					SharePerfenceUtil.setUserAccountType(mContext,
+							mUserDetailParser.entity.data.account_type);
+
+					if (mUserDetailParser.entity.data.type.equals("1")) {
+						mPayTypeValueItem = new String[mConfigParser.entity.data.type2pay.type1
+								.size()];
+						mPayTypeKeyItem = new String[mConfigParser.entity.data.type2pay.type1
+								.size()];
+						for (int i = 0; i < mConfigParser.entity.data.type2pay.type1
+								.size(); i++) {
+							int type = mConfigParser.entity.data.type2pay.type1
+									.get(i);
+							mPayTypeValueItem[i] = mConfigParser.entity.data.pay_type
+									.get(type - 1).value;
+							mPayTypeKeyItem[i] = mConfigParser.entity.data.pay_type
+									.get(type - 1).key;
+						}
+					} else {
+						mPayTypeValueItem = new String[mConfigParser.entity.data.type2pay.type0
+								.size()];
+						mPayTypeKeyItem = new String[mConfigParser.entity.data.type2pay.type0
+								.size()];
+						for (int i = 0; i < mConfigParser.entity.data.type2pay.type0
+								.size(); i++) {
+							int type = mConfigParser.entity.data.type2pay.type0
+									.get(i);
+							mPayTypeValueItem[i] = mConfigParser.entity.data.pay_type
+									.get(type - 1).value;
+							mPayTypeKeyItem[i] = mConfigParser.entity.data.pay_type
+									.get(type - 1).key;
+						}
+					}
+				} else {
+					ToastUtils.toast(mContext, mUserDetailParser.entity.msg);
+				}
+				break;
+			case MLHttpConnect2.FAILED:
+				Toast.makeText(mContext, "网络连接失败，请稍后重试", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			}
+			isUserDetailTaskRunning = false;
+		}
+
+	}
+	
 	private SimpleJasonParser mSimpleJsonParser;
 	Handler mPushHandler = new Handler() {
 		@Override
