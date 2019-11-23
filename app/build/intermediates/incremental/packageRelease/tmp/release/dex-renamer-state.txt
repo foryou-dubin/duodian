@@ -1,4 +1,0 @@
-#Sat Nov 23 09:40:27 CST 2019
-base.0=/Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/build/intermediates/dex/release/mergeDexRelease/out
-path.0=classes.dex
-renamed.0=classes.dex
