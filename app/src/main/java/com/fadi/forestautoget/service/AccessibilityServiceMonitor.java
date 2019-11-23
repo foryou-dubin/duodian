@@ -108,11 +108,12 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
         int hour = mShareUtil.getInt(Config.KEY_HOUR, 9);
         int minute = mShareUtil.getInt(Config.KEY_MINUTE,0);
         int seconds = mShareUtil.getInt(Config.KEY_SECONDS,0);
+        int millseconds = mShareUtil.getInt(Config.KEY_MILLSECNDS,0);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,seconds*10);
+        calendar.set(Calendar.SECOND,seconds);
+        calendar.set(Calendar.MILLISECOND,millseconds*10);
         UtilsLog.d(Config.TAG,"day:"+calendar.get(Calendar.DAY_OF_MONTH));
 
         long delay = calendar.getTimeInMillis() - System.currentTimeMillis();
@@ -132,7 +133,6 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
         AccessibilityServiceInfo serviceInfo = new AccessibilityServiceInfo();
         serviceInfo.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         serviceInfo.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
-        //serviceInfo.packageNames = new String[]{"com.gotokeep.keep", "com.eg.android.AlipayGphone", "com.sinovatech.unicom.ui", "com.tencent.mm"};// 监控的app
         serviceInfo.packageNames = new String[]{"com.wm.dmall"};// 监控的app
         serviceInfo.notificationTimeout = 100;
         serviceInfo.flags = serviceInfo.flags | AccessibilityServiceInfo.FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY;
@@ -146,19 +146,13 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
         String className = event.getClassName().toString();
         UtilsLog.d(Config.TAG,"packageName = " + packageName + ", className = " + className +",eventType:"+eventType);
         if(startFlag){
-//            if(packageName.equals("com.wm.dmall") && className.equals("com.tencent.tbs.core.webkit.WebView")){
-//                mHandle.sendEmptyMessageDelayed(MSG_DELAY_ENTER_FOREST,1000);
-//            }
-            UtilsLog.d(Config.TAG,"SystemTime:" + AccessibilitUtil.timeStamp2Date(System.currentTimeMillis(),null));
-            DuodianMonitor.enterMaotaiPage(getRootInActiveWindow(),packageName,className);
+            DuodianMonitor.enterMaotaiPage(getRootInActiveWindow());
+            if(packageName.equals("com.wm.dmall") && className.equals("com.tencent.tbs.core.webkit.WebView")){
+                DuodianMonitor.clickYuyue(getRootInActiveWindow(),packageName,className);
+            }else{
+                DuodianMonitor.enterMaotaiPage(getRootInActiveWindow());
+            }
         }
-//        switch (eventType) {
-//            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-//            case AccessibilityEvent.TYPE_VIEW_SCROLLED:
-//          //      DuodianMonitor.enterMaotaiPage(getRootInActiveWindow(),packageName,className);
-//                break;
-//
-//        }
     }
 
 
@@ -185,11 +179,10 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
                     UtilsLog.d(Config.TAG,"message setFlag true");
                     break;
                 case MSG_DELAY_ENTER_LIANGTONG:
-                    startLiangTongUI();
                     break;
                 case MSG_START_ACTION:
                     UtilsLog.d(Config.TAG,"handler message:" + AccessibilitUtil.timeStamp2Date(System.currentTimeMillis(),null));
-                    DuodianMonitor.enterMaotaiPage(getRootInActiveWindow(),"com.wm.dmall","");
+                    DuodianMonitor.enterMaotaiPage(getRootInActiveWindow());
                     startFlag = true;
                     break;
             }
@@ -269,11 +262,8 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
     }
 
     private void startAlipayUI() {
-        AlipayForestMonitor.startAlipay(this);
+
         mHandle.sendEmptyMessageDelayed(MSG_DELAY_ENTER_LIANGTONG, DEFAULT_DELAY_TIME * 10);
     }
 
-    private void startLiangTongUI() {
-        LiangTongMonitor.startLiangTongUI(this);
-    }
 }

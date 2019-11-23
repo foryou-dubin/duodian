@@ -17,12 +17,19 @@ public class Config {
 
     public static final String KEY_SECONDS = "key_seconds";
 
+    public static final String KEY_MILLSECNDS = "key_mill_seconds";
+
     public static final String KEY_SDCARD = "key_sdcard";
 
     public static final String KEY_MINUTE = "key_minute";
 
-    public static final int PAGE_MAIN = 1;
+    public static final int STATUS_MAIN = 1;
 
-    public static final int PAGE_MAOTAI = 2;
+    public static final int STATUS_CLICK_BTN = 2; //点击进入按钮
 
+    public static final int STATUS_CLICK_BACK = 3;
+
+    public static final int STATUS_CLICK_YUEYUE = 4;
+
+    public static volatile int CURRENT_STATUS = 1;
 }

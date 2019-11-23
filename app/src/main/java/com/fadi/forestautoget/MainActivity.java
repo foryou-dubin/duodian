@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.NumberPicker;
-import android.widget.Switch;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -23,17 +20,13 @@ import com.fadi.forestautoget.util.AccessibilitUtil;
 import com.fadi.forestautoget.util.Config;
 import com.fadi.forestautoget.util.ShareUtil;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, TimePicker.OnTimeChangedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TimePicker.OnTimeChangedListener {
 
     private ShareUtil mShareUtil;
 
     private TimePicker timepick;
-    private NumberPicker numberPicker;
+    private NumberPicker secPicker,millPicker;
 
-    private Switch sw_keep;
-    private Switch sw_liangtong;
-    private Switch sw_alipay_forest;
-    private Switch sw_wechart_motion;
     private Button btnSettings;
 
     private final int REQUEST_WRITE = 100;
@@ -84,27 +77,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        timepick = (TimePicker) findViewById(R.id.timepick);
-        numberPicker = (NumberPicker) findViewById(R.id.num_picker);
-        numberPicker.setMaxValue(99);
-        numberPicker.setMinValue(0);
-        numberPicker.setValue(0);
-        numberPicker.setOnValueChangedListener(valueChangeListener);
-        sw_keep = (Switch) findViewById(R.id.sw_keep);
-        sw_liangtong = (Switch) findViewById(R.id.sw_liangtong);
+        timepick = findViewById(R.id.timepick);
+        secPicker = findViewById(R.id.sec_picker);
+        secPicker.setMaxValue(59);
+        secPicker.setMinValue(0);
+        secPicker.setValue(0);
+        secPicker.setOnValueChangedListener(valueChangeListener);
+
+        millPicker = findViewById(R.id.millsec_picker);
+        millPicker.setMaxValue(99);
+        millPicker.setMinValue(0);
+        millPicker.setValue(0);
+        millPicker.setOnValueChangedListener(valueChangeListener);
+
         btnSettings = (Button) findViewById(R.id.btn_settings);
-        sw_alipay_forest = (Switch) findViewById(R.id.sw_alipay_forest);
-        sw_wechart_motion = (Switch) findViewById(R.id.sw_wechart_motion);
     }
 
     NumberPicker.OnValueChangeListener valueChangeListener = new NumberPicker.OnValueChangeListener() {
         @Override
         public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-            if(mShareUtil!= null){
-                mShareUtil.setShare(Config.KEY_SECONDS, i1);
-                startAccessService();
+            if(mShareUtil == null){
+                return;
             }
+            if(numberPicker == secPicker){
+                mShareUtil.setShare(Config.KEY_SECONDS, i1);
+            }else if(numberPicker == millPicker){
+                mShareUtil.setShare(Config.KEY_MILLSECNDS, i1);
+            }
+            startAccessService();
         }
     };
 
@@ -119,11 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initListener() {
         btnSettings.setOnClickListener(this);
-        sw_keep.setOnCheckedChangeListener(this);
-        sw_liangtong.setOnCheckedChangeListener(this);
-        sw_alipay_forest.setOnCheckedChangeListener(this);
-        sw_wechart_motion.setOnCheckedChangeListener(this);
-
         timepick.setOnTimeChangedListener(this);
     }
 
@@ -143,52 +139,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnSettings.setEnabled(true);
         }
 
-        sw_keep.setChecked(mShareUtil.getBoolean(Config.APP_KEEP, true));
-        sw_alipay_forest.setChecked(mShareUtil.getBoolean(Config.APP_ALIPAY_FOREST, true));
-        sw_liangtong.setChecked(mShareUtil.getBoolean(Config.APP_LIANG_TONG, true));
-        sw_wechart_motion.setChecked(mShareUtil.getBoolean(Config.APP_WECHART_MOTHION, true));
+        int hour = mShareUtil.getInt(Config.KEY_HOUR, 9);
+        int minute = mShareUtil.getInt(Config.KEY_MINUTE, 0);
+        int sec = mShareUtil.getInt(Config.KEY_SECONDS, 0);
+        int millSec = mShareUtil.getInt(Config.KEY_MILLSECNDS, 0);
 
-        int hour = mShareUtil.getInt(Config.KEY_HOUR, -1);
-        int minute = mShareUtil.getInt(Config.KEY_MINUTE, -1);
+        timepick.setHour(hour);
+        timepick.setMinute(minute);
 
-        if (hour == -1 && minute == -1) {
-            // do nothing
-        } else {
-            timepick.setHour(hour);
-            timepick.setMinute(minute);
-        }
+        secPicker.setValue(sec);
+        millPicker.setValue(millSec);
     }
 
     private void startService() {
         Intent mIntent = new Intent(this, AccessibilityServiceMonitor.class);
         startService(mIntent);
-    }
-
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch (compoundButton.getId()) {
-            case R.id.sw_keep:
-                mShareUtil.setShare(Config.APP_KEEP, b);
-                Log.d(Config.TAG, "Keep is " + b);
-                break;
-            case R.id.sw_alipay_forest:
-                mShareUtil.setShare(Config.APP_ALIPAY_FOREST, b);
-                Log.d(Config.TAG, "AlipayForest is " + b);
-                break;
-            case R.id.sw_liangtong:
-                mShareUtil.setShare(Config.APP_LIANG_TONG, b);
-                Log.d(Config.TAG, "LiangTong is " + b);
-                break;
-            case R.id.sw_wechart_motion:
-                mShareUtil.setShare(Config.APP_WECHART_MOTHION, b);
-                Log.d(Config.TAG, "Wechat mothion is " + b);
-                break;
-        }
-
-        Intent intent = new Intent(this, AccessibilityServiceMonitor.class);
-        intent.setAction(AccessibilityServiceMonitor.ACTION_UPDATE_SWITCH);
-        MainActivity.this.startService(intent);
     }
 
 
@@ -203,9 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mShareUtil != null) {
             mShareUtil.setShare(Config.KEY_HOUR, hourOfDay);
             mShareUtil.setShare(Config.KEY_MINUTE, minute);
-
-           // MyApplication.startAlarmTask(MainActivity.this);
-
             startAccessService();
         }
     }

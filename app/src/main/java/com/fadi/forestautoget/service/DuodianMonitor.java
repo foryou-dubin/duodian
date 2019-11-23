@@ -36,11 +36,19 @@ public class DuodianMonitor {
 
                 if(pagename.equals(""+child.getText())){
                     UtilsLog.d(Config.TAG, "performAction click ......");
-                    child.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    if(Config.CURRENT_STATUS != Config.STATUS_CLICK_YUEYUE){
+                        Config.CURRENT_STATUS = Config.STATUS_CLICK_YUEYUE;
+                        child.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                        UtilsLog.d(Config.TAG,"click maotai yuyue");
+                    }
                 }else{
                     if(shouldReturn(child)){
                         UtilsLog.d(Config.TAG, "performGlobalBack Action");
-                        AccessibilityServiceMonitor.getInstance().performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                        if(Config.CURRENT_STATUS != Config.STATUS_CLICK_BACK){
+                            Config.CURRENT_STATUS = Config.STATUS_CLICK_BACK;
+                            UtilsLog.d(Config.TAG,"click back");
+                            AccessibilityServiceMonitor.getInstance().performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                        }
                         return;
                     }
                     findEveryViewNode(child,pagename);
@@ -57,10 +65,7 @@ public class DuodianMonitor {
                     AccessibilityNodeInfo child =  nodeInfo.getChild(i);
                     UtilsLog.d(Config.TAG,"policy child count:"+child.getChildCount());
                     UtilsLog.d(Config.TAG,"policy child:"+child.getClassName().toString()+","+child.getText());
-                    //if ("com.tencent.tbs.core.webkit.WebView".equals(child.getClassName())) {
                     findEveryViewNode(child,pagename);
-                //        break;
-                //    }
                 }
             } else {
                 UtilsLog.d(Config.TAG, "alipayPolicy = null");
@@ -85,16 +90,24 @@ public class DuodianMonitor {
                 /**
                  *  蚂蚁森林本身不可点击，但是他的父控件可以点击
                  */
-                UtilsLog.d(Config.TAG, "item:"+item);
+                UtilsLog.d(Config.TAG, "item:"+item.getText());
                 if(item.isClickable()){
-                    item.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    UtilsLog.d(Config.TAG, "item click 1");
+                    if(Config.CURRENT_STATUS != Config.STATUS_CLICK_BTN){
+                        UtilsLog.d(Config.TAG, "item click 2");
+                        Config.CURRENT_STATUS = Config.STATUS_CLICK_BTN;
+                        item.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    }
                 }else{
                     AccessibilityNodeInfo parent = item.getParent();
                     UtilsLog.d(Config.TAG, "parent:"+parent);
                     if (null != parent && parent.isClickable()) {
-                        UtilsLog.d(Config.TAG, "parent clickable");
-                        parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                        UtilsLog.d(Config.TAG, "item = " + item.toString() + ", parent click = " + parent.toString());
+                        UtilsLog.d(Config.TAG, "parent clickable 1");
+                        if(Config.CURRENT_STATUS != Config.STATUS_CLICK_BTN){
+                            Config.CURRENT_STATUS = Config.STATUS_CLICK_BTN;
+                            UtilsLog.d(Config.TAG, "parent clickable 2");
+                            parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                        }
                         break;
                     }
                 }
@@ -104,14 +117,16 @@ public class DuodianMonitor {
 
 
 
-    public static void enterMaotaiPage(AccessibilityNodeInfo nodeInfo,String packageName,String className) {
-        UtilsLog.d(Config.TAG, "enterDuoDianUI ");
+    public static void enterMaotaiPage(AccessibilityNodeInfo nodeInfo) {
+        UtilsLog.d(Config.TAG, "enterDuoDianUI");
+        enterPage(nodeInfo,"茅台预售");
+    }
 
-        if(packageName.equals("com.wm.dmall") && className.equals("com.tencent.tbs.core.webkit.WebView")){
+
+    public static void clickYuyue(AccessibilityNodeInfo nodeInfo,String packageName,String className){
+        //if(packageName.equals("com.wm.dmall") && className.equals("com.tencent.tbs.core.webkit.WebView")){
             policy(nodeInfo,packageName,className,"预约购买");
-        }else{
-            enterPage(nodeInfo,"茅台预售");
-        }
+        //}
     }
 
     public static void startDuodianPage(Context mContext) {
