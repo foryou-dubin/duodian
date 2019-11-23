@@ -1,0 +1,183 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+MERGED from [androidx.appcompat:appcompat:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d2fa8b70aaf5b1d34f3716ffd68ecefd/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] /Users/dubin/.gradle/caches/transforms-2/files-2.1/4a5ee74f314849effae16809291bc838/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.fragment:fragment:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d8bc52766f961868a48e964b2ede7359/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/b1368cbf7ff9664165ecf1e56a3b7bc4/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/74ac2620403a5aa9a6e7d5232e6b7e7c/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/841e58ae20b0d2b23505ad1f3105588b/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/17132b414ab6741718022984e49ef8fc/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/5f14ea07252240a6ce03102f67a0035c/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/8b549f61b0dc95ac6b356f52fa7496e7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/93014e12283d240652fbc98e177d2a61/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/ba810c2b1eb207575523746e6787759b/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/57e4cdb23420fac3f7b412b483ee760a/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/49edac300af9b3405e9cc8942d27b6ac/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d0bf9a599f15d3cf3018ae5b7f02d363/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/97d78df3b1aa399f65dfb36ab66701d2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/fc089ce2fcd1f744c2da43183f8eac2f/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/13ee9b2f961fff21f764c163e2e4bd7a/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/e831a51de5d086389303a72843f2e09d/AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.documentfile:documentfile:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f95a8db4060b2a4b961b09b0f10d94ec/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f109f7736429e30ee66c80d16d2ac0ef/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f8674b5c784c9022133697a184ecba01/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/51426b8e8e19dcbf6ba974cef1afeeec/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/61c127195f2aa76fff5f40a2decc4a80/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f8c28915ffe4628d0dc2bd318edbc726/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/372786618921f1a991bac8fdf1fecdf3/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/32be7034beb0a985927606c0c5774518/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+	package
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:3:5-37
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:1-44:12
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:6:5-97
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:6:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:7:5-96
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:7:22-77
+application
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:9:5-42:19
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] /Users/dubin/.gradle/caches/transforms-2/files-2.1/4a5ee74f314849effae16809291bc838/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] /Users/dubin/.gradle/caches/transforms-2/files-2.1/4a5ee74f314849effae16809291bc838/AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/fc089ce2fcd1f744c2da43183f8eac2f/AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/fc089ce2fcd1f744c2da43183f8eac2f/AndroidManifest.xml:22:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/e831a51de5d086389303a72843f2e09d/AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/e831a51de5d086389303a72843f2e09d/AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/fc089ce2fcd1f744c2da43183f8eac2f/AndroidManifest.xml:22:18-86
+	android:supportsRtl
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:14:9-35
+	android:label
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:12:9-41
+	android:icon
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:11:9-43
+	android:allowBackup
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:15:9-40
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:13:9-38
+activity#com.fadi.forestautoget.MainActivity
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:16:9-22:20
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:16:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:17:13-21:29
+action#android.intent.action.MAIN
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:18:17-69
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:18:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:20:17-77
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:20:27-74
+service#com.fadi.forestautoget.service.AccessibilityServiceMonitor
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:24:9-41:19
+	android:enabled
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:26:13-35
+	android:label
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:28:13-45
+	android:exported
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:27:13-36
+	android:permission
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:29:13-79
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:25:13-64
+intent-filter#action:name:android.accessibilityservice.AccessibilityService
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:31:13-33:29
+action#android.accessibilityservice.AccessibilityService
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:32:17-92
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:32:25-89
+meta-data#android.accessibilityservice
+ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:35:13-39:25
+	android:resource
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:37:17-61
+	android:name
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml:36:17-60
+uses-sdk
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+MERGED from [androidx.appcompat:appcompat:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d2fa8b70aaf5b1d34f3716ffd68ecefd/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d2fa8b70aaf5b1d34f3716ffd68ecefd/AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] /Users/dubin/.gradle/caches/transforms-2/files-2.1/4a5ee74f314849effae16809291bc838/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] /Users/dubin/.gradle/caches/transforms-2/files-2.1/4a5ee74f314849effae16809291bc838/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.fragment:fragment:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d8bc52766f961868a48e964b2ede7359/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d8bc52766f961868a48e964b2ede7359/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/b1368cbf7ff9664165ecf1e56a3b7bc4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/b1368cbf7ff9664165ecf1e56a3b7bc4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/74ac2620403a5aa9a6e7d5232e6b7e7c/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/74ac2620403a5aa9a6e7d5232e6b7e7c/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/841e58ae20b0d2b23505ad1f3105588b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/841e58ae20b0d2b23505ad1f3105588b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/17132b414ab6741718022984e49ef8fc/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/17132b414ab6741718022984e49ef8fc/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/5f14ea07252240a6ce03102f67a0035c/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/5f14ea07252240a6ce03102f67a0035c/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/8b549f61b0dc95ac6b356f52fa7496e7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/8b549f61b0dc95ac6b356f52fa7496e7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/93014e12283d240652fbc98e177d2a61/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/93014e12283d240652fbc98e177d2a61/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/ba810c2b1eb207575523746e6787759b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/ba810c2b1eb207575523746e6787759b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/57e4cdb23420fac3f7b412b483ee760a/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/57e4cdb23420fac3f7b412b483ee760a/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/49edac300af9b3405e9cc8942d27b6ac/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/49edac300af9b3405e9cc8942d27b6ac/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d0bf9a599f15d3cf3018ae5b7f02d363/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/d0bf9a599f15d3cf3018ae5b7f02d363/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/97d78df3b1aa399f65dfb36ab66701d2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/97d78df3b1aa399f65dfb36ab66701d2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/fc089ce2fcd1f744c2da43183f8eac2f/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/fc089ce2fcd1f744c2da43183f8eac2f/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/13ee9b2f961fff21f764c163e2e4bd7a/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/13ee9b2f961fff21f764c163e2e4bd7a/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/e831a51de5d086389303a72843f2e09d/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/e831a51de5d086389303a72843f2e09d/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f95a8db4060b2a4b961b09b0f10d94ec/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f95a8db4060b2a4b961b09b0f10d94ec/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f109f7736429e30ee66c80d16d2ac0ef/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f109f7736429e30ee66c80d16d2ac0ef/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f8674b5c784c9022133697a184ecba01/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f8674b5c784c9022133697a184ecba01/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/51426b8e8e19dcbf6ba974cef1afeeec/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/51426b8e8e19dcbf6ba974cef1afeeec/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/61c127195f2aa76fff5f40a2decc4a80/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/61c127195f2aa76fff5f40a2decc4a80/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f8c28915ffe4628d0dc2bd318edbc726/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/f8c28915ffe4628d0dc2bd318edbc726/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/372786618921f1a991bac8fdf1fecdf3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/372786618921f1a991bac8fdf1fecdf3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/32be7034beb0a985927606c0c5774518/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0-beta01] /Users/dubin/.gradle/caches/transforms-2/files-2.1/32be7034beb0a985927606c0c5774518/AndroidManifest.xml:20:5-44
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		ADDED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/src/main/AndroidManifest.xml

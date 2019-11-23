@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Sat Nov 23 09:40:27 CST 2019
+0.baseType=DIRECTORY
+0.base=/Users/dubin/dubin/androidCode/AccessibilityServiceMonitor-master/app/build/intermediates/dex/release/mergeDexRelease/out
+0.path=classes.dex
+0.set=DEX
+count=1
